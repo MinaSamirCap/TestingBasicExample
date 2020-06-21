@@ -61,6 +61,8 @@ dependencies {
     testImplementation "androidx.test.ext:junit-ktx:$androidXTestExtKotlinRunnerVersion"
     // architecture component test library rule
     testImplementation "androidx.arch.core:core-testing:$archTestingVersion"
+    // coroutines test library
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesVersion"
 
 
     // AndroidX Test - Instrumented testing
