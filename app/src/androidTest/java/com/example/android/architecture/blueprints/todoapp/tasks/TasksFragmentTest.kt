@@ -1,11 +1,13 @@
 package com.example.android.architecture.blueprints.todoapp.tasks
 
 import FakeAndroidTestRepository
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import androidx.test.core.app.ApplicationProvider.getApplicationContext
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.contrib.RecyclerViewActions
@@ -65,6 +67,31 @@ class TasksFragmentTest {
         // THEN - Verify that we navigate the first details screen.
         verify(navController).navigate(
             TasksFragmentDirections.actionTasksFragmentToTaskDetailFragment("id1")
+        )
+    }
+
+    @Test
+    fun clickAddTAskButton_navigateToADDEditFragment(){
+        // GIVEN - tasks fragment empty or not
+
+        val scenario = launchFragmentInContainer<TasksFragment>(Bundle(), R.style.AppTheme)
+        val navController = mock(NavController::class.java)
+
+        // I have a scenario and a navController
+        // now I want the scenario to use my navController. so,
+        scenario.onFragment {
+            Navigation.setViewNavController(it.view!!, navController)
+            // now the fragment scenario use my mocked navController .. :)
+        }
+
+        // WHEN - Click on the "+" button
+        onView(withId(R.id.add_task_fab)).perform(click())
+
+        // THEN - Verify that we navigate to the add screen
+        verify(navController).navigate(
+            TasksFragmentDirections.actionTasksFragmentToAddEditTaskFragment(
+                null, getApplicationContext<Context>().getString(R.string.add_task)
+            )
         )
     }
 
